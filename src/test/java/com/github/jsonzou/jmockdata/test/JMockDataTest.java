@@ -28,6 +28,17 @@ public class JMockDataTest {
     }
 
     /**
+     * 测试配置文件 》 改变默认算法行为
+     */
+    @Test
+    public void mockTest_config() {
+        JMockDataManager.getInstance().config("conf/config.properties");
+        // System.out.println(JSONObject.toJSONString(JMockDataManager.getInstance().config(),true));
+        MockDemoBeanConfigWrapper mockData = JMockData.mock(MockDemoBeanConfigWrapper.class);
+        mockData.setJmockDataContext(null);
+        print(mockData);
+    }
+    /**
      * 测试模拟任意类型的数据
      */
     @Test
