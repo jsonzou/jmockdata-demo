@@ -1,6 +1,11 @@
+
+/*
+ * Copyright (C) 2017 Baidu, Inc. All Rights Reserved.
+ */
 package com.github.jsonzou.jmockdata.test;
 
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.serializer.SerializerFeature;
 import com.github.jsonzou.jmockdata.JMockData;
 import com.github.jsonzou.jmockdata.mockdata.JMockDataManager;
 import com.github.jsonzou.jmockdata.mockdata.JmockdataWrapperMetaDataAll;
@@ -35,8 +40,8 @@ public class JMockDataTest {
      */
     @Test
     public void mockTest_mockSimpleType_mockPOJO() {
-        User user=JMockData.mockSimpleType(User.class);
-        print(user);
+          User user= JMockData.mockSimpleType(User.class);
+          print(user);
     }
 
     /**
@@ -44,7 +49,7 @@ public class JMockDataTest {
      */
     @Test
     public void mockTest_mockSimpleType_mockAny() {
-        MockDemoBeanAnyData anyData=JMockData.mockSimpleType(MockDemoBeanAnyData.class);
+        MockDemoBeanAnyData anyData= JMockData.mockSimpleType(MockDemoBeanAnyData.class);
         print(anyData);
     }
     /**
@@ -66,7 +71,7 @@ public class JMockDataTest {
         System.out.println("DateData => " + JMockData.mockSimpleType(Date.class));
         System.out.println("DateArrayData => " + JSON.toJSONString(JMockData.mockSimpleType(Date[].class), true));
 
-        System.out.println("IntegerData => " +JMockData.mockSimpleType(Integer.class));
+        System.out.println("IntegerData => " + JMockData.mockSimpleType(Integer.class));
         System.out.println("IntegerBoxingArrayData => " + JSON.toJSONString(JMockData.mockSimpleType(Integer[].class), true));
         System.out.println("IntegerUnboxingArrayData => " + JSON.toJSONString(JMockData.mockSimpleType(int[].class), true));
 
@@ -106,11 +111,11 @@ public class JMockDataTest {
      */
     @Test
     public void mockTest_mockCollection() {
-        List<String> listStr=JMockData.mockCollection(new TypeReference<List<String>>(){});
-        List<User[]> listUser=JMockData.mockCollection(new TypeReference<List<User[]>>(){});
-        Set<String> setStr=JMockData.mockCollection(new TypeReference<Set<String>>(){});
-        Map<String,String> mapStr=JMockData.mockCollection(new TypeReference<Map<String,String>>(){});
-        Map<String,User> mapUser=JMockData.mockCollection(new TypeReference<Map<String,User>>(){});
+        List<String> listStr= JMockData.mockCollection(new TypeReference<List<String>>(){});
+        List<User[]> listUser= JMockData.mockCollection(new TypeReference<List<User[]>>(){});
+        Set<String> setStr= JMockData.mockCollection(new TypeReference<Set<String>>(){});
+        Map<String,String> mapStr= JMockData.mockCollection(new TypeReference<Map<String,String>>(){});
+        Map<String,User> mapUser= JMockData.mockCollection(new TypeReference<Map<String,User>>(){});
 
         print(listStr);
         print(listUser);
@@ -129,7 +134,7 @@ public class JMockDataTest {
      */
     @Test
     public void mockTest_mockMetaDataAll() {
-        JmockdataWrapperMetaDataAll metaDataMocker=JMockData.mockMetaDataAll();
+        JmockdataWrapperMetaDataAll metaDataMocker= JMockData.mockMetaDataAll();
         System.out.println("BigIntegerData => " + metaDataMocker.getBigIntegerData());
         System.out.println("BigIntegerArrayData => " + JSON.toJSONString(metaDataMocker.getBigIntegerArrayData(), true));
 
@@ -184,17 +189,17 @@ public class JMockDataTest {
      */
     @Test
     public void mockTest_mockMetaDataSingle() {
-        JmockdataWrapperMetaDataSingle metaDataMocker=JMockData.mockMetaDataSingle();
+        JmockdataWrapperMetaDataSingle metaDataMocker= JMockData.mockMetaDataSingle();
         System.out.println("BigIntegerData => " + metaDataMocker.getBigIntegerData());
         System.out.println("BigIntegerArrayData => " + JSON.toJSONString(metaDataMocker.getBigIntegerArrayData(), true));
 
         System.out.println("BigDecimalData => " + metaDataMocker.getBigDecimalData());
         System.out.println("BigDecimalArrayData => " + JSON.toJSONString(metaDataMocker.getBigDecimalArrayData(), true));
-
+        
         System.out.println("StringData => " + metaDataMocker.getStringData());
         System.out.println("StringArrayData => " + JSON.toJSONString(metaDataMocker.getStringArrayData(), true));
-
-
+        
+        
 
         System.out.println("DateData => " + metaDataMocker.getDateData());
         System.out.println("DateArrayData => " + JSON.toJSONString(metaDataMocker.getDateArrayData(), true));
@@ -235,6 +240,7 @@ public class JMockDataTest {
 
 
     }
+
     /**
      * 测试模拟简单List<String>
      */
@@ -250,12 +256,26 @@ public class JMockDataTest {
      */
     @Test
     public void mockTest_config() {
-        JMockDataManager.getInstance().config("conf/config.properties");
-        // System.out.println(JSONObject.toJSONString(JMockDataManager.getInstance().config(),true));
+        JMockDataManager.getInstance().config("config.properties");
+       // System.out.println(JSONObject.toJSONString(JMockDataManager.getInstance().config(),true));
         MockDemoBeanConfigWrapper mockData = JMockData.mock(MockDemoBeanConfigWrapper.class);
         mockData.setJmockDataContext(null);
         print(mockData);
     }
+
+    /**
+     * 测试配置文件 》 改变默认算法行为
+     */
+    @Test
+    public void mockTest_config_rangeMock() {
+        JMockDataManager.getInstance().config("config.properties");
+        System.out.println(JMockData.mockMetaDataSingle().getDoubleData());
+        System.out.println(JMockData.mockMetaDataSingle().getFloatData());
+        System.out.println(JMockData.mockMetaDataSingle().getIntegerData());
+        System.out.println(JMockData.mockMetaDataSingle().getLongData());
+    }
+
+
     /**
      * 测试模拟任意类型的数据
      */
@@ -318,6 +338,8 @@ public class JMockDataTest {
      * @param data
      */
     private void print(Object data) {
-        System.out.println(JSON.toJSONString(data, true));
+
+        System.out.println(JSON.toJSONStringWithDateFormat(data, "YYYY-MM-dd HH:mm:ss", SerializerFeature.PrettyFormat));
+     //   System.out.println(JSON.toJSONString(data, true));
     }
 }
