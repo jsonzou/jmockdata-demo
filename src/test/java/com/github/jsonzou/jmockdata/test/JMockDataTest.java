@@ -256,7 +256,7 @@ public class JMockDataTest {
      */
     @Test
     public void mockTest_config() {
-        JMockDataManager.getInstance().config("config.properties");
+        JMockDataManager.getInstance().config("conf/config.properties");
        // System.out.println(JSONObject.toJSONString(JMockDataManager.getInstance().config(),true));
         MockDemoBeanConfigWrapper mockData = JMockData.mock(MockDemoBeanConfigWrapper.class);
         mockData.setJmockDataContext(null);
@@ -268,7 +268,7 @@ public class JMockDataTest {
      */
     @Test
     public void mockTest_config_rangeMock() {
-        JMockDataManager.getInstance().config("config.properties");
+        JMockDataManager.getInstance().config("conf/config.properties");
         System.out.println(JMockData.mockMetaDataSingle().getDoubleData());
         System.out.println(JMockData.mockMetaDataSingle().getFloatData());
         System.out.println(JMockData.mockMetaDataSingle().getIntegerData());
